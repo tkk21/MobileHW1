@@ -41,11 +41,60 @@ public class PatternGenerator
     public List<Point> getPattern()
     {
         List<Point> pattern = new ArrayList<Point>();
-        //.....
-        //.....
+        List<Point> candidateList = getAllAvailablePointList();
+        Point initPoint = generatePoint();
+        candidateList.remove(initPoint);
+
+        for (int i = 0; i < Defaults.PATTERN_MAX; i++) {
+            pattern.add(getNextNode(candidateList, initPoint));
+        }
+
         return pattern;
     }
 
+    private Point getNextNode(List<Point> candidateList, Point initPoint) {
+
+        int deltaX;
+        int deltaY;
+        int gcd;
+
+        for (Point p : candidateList) {
+            deltaX = p.x - initPoint.x;
+            deltaY = p.y - initPoint.y;
+
+            gcd = computeGcd(deltaX, deltaY);
+
+            if (gcd > 1) {
+
+                for (int j = 1; j < gcd; j++) {
+                    int unusedX = initPoint.x + deltaX/gcd*j;
+                    int unusedY = initPoint.y + deltaY/gcd*j;
+
+                    Point unusedPoint = new Point(unusedX, unusedY);
+
+                    if (candidateList.contains((unusedPoint))) {
+
+                        candidateList.remove(p);
+                    }
+                }
+            }
+        }
+
+        return candidateList.get((int)(candidateList.size()*Math.random()));
+    }
+
+    private Point generatePoint() {
+        return new Point((int)(Defaults.GRID_LENGTH*Math.random()), (int)(Defaults.GRID_LENGTH*Math.random()));
+    }
+    private List<Point> getAllAvailablePointList (){
+        List<Point> allAvailablePointList = new ArrayList<Point>();
+        for (int i=  0; i<Defaults.GRID_LENGTH; i++){
+            for (int j = 0; j<Defaults.GRID_LENGTH; j++){
+                allAvailablePointList.add(new Point(i,j));
+            }
+        }
+        return allAvailablePointList;
+    }
     //
     // Accessors / Mutators
     //

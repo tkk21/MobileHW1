@@ -21,7 +21,7 @@ package com.example.haotian.haotianalp;
 public class Defaults
 {
     public static final int GRID_LENGTH = 3;
-    public static final int PATTERN_MIN = 3;
+    public static final int PATTERN_MIN = 5;
     public static final int PATTERN_MAX = 5;
     public static final String HIGHLIGHT_MODE = "first";
     public static final boolean REMIND_OF_SEPARATION = true;
