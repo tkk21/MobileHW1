@@ -54,9 +54,7 @@ public class PatternGenerator
             Point p =getNextNode(candidateList, initPoint);
             pattern.add(p);
             initPoint = p;
-            //candidateList.remove(p);
-
-
+//            candidateList.remove(p);
         }
         for (Point p : pattern) {
             Log.d("debug", "the point is: " + p.x + ", "+ p.y);
