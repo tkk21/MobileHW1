@@ -18,6 +18,8 @@ You should have received a copy of the GNU General Public License along with
 */
 package com.example.haotian.haotianalp;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -41,15 +43,39 @@ public class PatternGenerator
     public List<Point> getPattern()
     {
         List<Point> pattern = new ArrayList<Point>();
-        List<Point> candidateList = getAllAvailablePointList();
+
         Point initPoint = generatePoint();
-        candidateList.remove(initPoint);
+        pattern.add(initPoint);
 
-        for (int i = 0; i < Defaults.PATTERN_MAX; i++) {
-            pattern.add(getNextNode(candidateList, initPoint));
+        List<Point> candidateList;
+
+        for (int i = 0; i < Defaults.PATTERN_MAX-1; i++) {
+            candidateList  = generateCandidateList(pattern);
+            Point p =getNextNode(candidateList, initPoint);
+            pattern.add(p);
+            initPoint = p;
+            //candidateList.remove(p);
+
+
         }
-
+        for (Point p : pattern) {
+            Log.d("debug", "the point is: " + p.x + ", "+ p.y);
+        }
         return pattern;
+    }
+
+    /**
+     * generates the candidate list for the next iteration,
+     * removing the nodes that are already picked
+     * @param patternSoFar
+     * @return
+     */
+    private  List<Point> generateCandidateList(List<Point> patternSoFar){
+        List<Point> candidateList = getAllAvailablePointList();
+        for (Point p: patternSoFar){
+            candidateList.remove(p);
+        }
+        return candidateList;
     }
 
     private Point getNextNode(List<Point> candidateList, Point initPoint) {
@@ -57,10 +83,11 @@ public class PatternGenerator
         int deltaX;
         int deltaY;
         int gcd;
+        ArrayList<Point> newCandidateList = new ArrayList<Point>();
 
         for (Point p : candidateList) {
-            deltaX = p.x - initPoint.x;
-            deltaY = p.y - initPoint.y;
+            deltaX = Math.abs(p.x - initPoint.x);
+            deltaY = Math.abs(p.y - initPoint.y);
 
             gcd = computeGcd(deltaX, deltaY);
 
@@ -76,6 +103,7 @@ public class PatternGenerator
 
                         candidateList.remove(p);
                     }
+                    newCandidateList.add(p);
                 }
             }
         }
