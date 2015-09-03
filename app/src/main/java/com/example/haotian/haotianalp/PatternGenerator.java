@@ -83,6 +83,7 @@ public class PatternGenerator
         int deltaX;
         int deltaY;
         int gcd;
+
         ArrayList<Point> newCandidateList = new ArrayList<Point>();
 
         for (Point p : candidateList) {
@@ -100,8 +101,7 @@ public class PatternGenerator
                     Point unusedPoint = new Point(unusedX, unusedY);
 
                     if (candidateList.contains((unusedPoint))) {
-
-                        candidateList.remove(p);
+                        continue;
                     }
                     newCandidateList.add(p);
                 }

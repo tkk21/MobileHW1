@@ -86,7 +86,6 @@ public class ALPActivity extends Activity {
                         mPatternView.setPattern(mGenerator.getPattern());
                     }
                 }
-                System.out.println("The button was fking clicked");
         );
 
         mPracticeToggle = (ToggleButton) findViewById(R.id.practice_toggle);
