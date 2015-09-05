@@ -72,6 +72,7 @@ public class LockPatternView extends View
     protected List<Point> mCurrentPattern;
     protected List<Point> mPracticePattern;
     protected Set<Point> mPracticePool;
+    protected TouchDataObject mTouchDataObject;
 
     public LockPatternView(Context context, AttributeSet attrs)
     {
@@ -281,6 +282,20 @@ public class LockPatternView extends View
                     resetPractice();
                 }
                 mDrawTouchExtension = true;
+
+                //Modifications starts here
+                if (mVelocityTracker == null) {
+                    mVelocityTracker = VelocityTracker.obtain();
+                }
+                else {
+                    mVelocityTracker.clear();
+                }
+
+                mTouchDataObject = new TouchDataObject(event.getX(), event.getY(), mVelocityTracker.getXVelocity(),
+                        mVelocityTracker.getYVelocity(),event.getPressure(), event.getSize());
+
+                //Modifications ends here
+
             case MotionEvent.ACTION_MOVE:
                 float x = event.getX(), y = event.getY();
                 mTouchPoint.x = (int) x;
@@ -338,6 +353,14 @@ public class LockPatternView extends View
                     appendPattern(mPracticePattern, newPoint);
                     mPracticePool.add(newPoint);
                 }
+
+                //Modifications starts here
+
+                mTouchDataObject.setVelocity_X(mVelocityTracker.getXVelocity());
+                mTouchDataObject.setVelocity_Y(mVelocityTracker.getYVelocity());
+
+                //Modifications ends here
+
                 break;
             case MotionEvent.ACTION_UP:
                 mDrawTouchExtension = false;
@@ -380,7 +403,7 @@ public class LockPatternView extends View
             length = Math.min(width,height);
         }
 
-        setMeasuredDimension(length,length);
+        setMeasuredDimension(length, length);
     }
 
     // update draw values dependent on view size so it doesn't have to happen
