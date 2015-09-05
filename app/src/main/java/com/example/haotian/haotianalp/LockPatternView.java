@@ -72,7 +72,9 @@ public class LockPatternView extends View
     protected List<Point> mCurrentPattern;
     protected List<Point> mPracticePattern;
     protected Set<Point> mPracticePool;
+
     protected TouchDataObject mTouchDataObject;
+    protected TouchDataRecorder mTouchDataRecorder;
 
     public LockPatternView(Context context, AttributeSet attrs)
     {
@@ -284,6 +286,11 @@ public class LockPatternView extends View
                 mDrawTouchExtension = true;
 
                 //Modifications starts here
+                if (mTouchDataRecorder != null) {
+                    mTouchDataRecorder.close();
+                }
+                mTouchDataRecorder = new TouchDataRecorder(String.format("TouchData%d.csv", TouchDataRecorder.fileCount));
+
                 if (mVelocityTracker == null) {
                     mVelocityTracker = VelocityTracker.obtain();
                 }
@@ -358,6 +365,7 @@ public class LockPatternView extends View
 
                 mTouchDataObject.setVelocity_X(mVelocityTracker.getXVelocity());
                 mTouchDataObject.setVelocity_Y(mVelocityTracker.getYVelocity());
+                mTouchDataRecorder.writeData(mTouchDataObject);
 
                 //Modifications ends here
 
