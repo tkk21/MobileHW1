@@ -85,8 +85,8 @@ public class PatternGenerator
         ArrayList<Point> pointsToRemove = new ArrayList<Point>();
 
         for (Point p : candidateList) {
-            deltaX = Math.abs(p.x - initPoint.x);
-            deltaY = Math.abs(p.y - initPoint.y);
+            deltaX = p.x - initPoint.x;
+            deltaY = p.y - initPoint.y;
 
             gcd = computeGcd(deltaX, deltaY);
 
@@ -103,6 +103,7 @@ public class PatternGenerator
                     }
                 }
             }
+
         }
         for (Point p: pointsToRemove){
             candidateList.remove(p);
