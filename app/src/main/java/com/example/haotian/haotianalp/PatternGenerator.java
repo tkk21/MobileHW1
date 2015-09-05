@@ -82,7 +82,7 @@ public class PatternGenerator
         int deltaY;
         int gcd;
 
-        ArrayList<Point> newCandidateList = new ArrayList<Point>();
+        ArrayList<Point> pointsToRemove = new ArrayList<Point>();
 
         for (Point p : candidateList) {
             deltaX = Math.abs(p.x - initPoint.x);
@@ -99,14 +99,15 @@ public class PatternGenerator
                     Point unusedPoint = new Point(unusedX, unusedY);
 
                     if (candidateList.contains((unusedPoint))) {
-                        continue;
+                        pointsToRemove.add(p);
                     }
-                    newCandidateList.add(p);
                 }
             }
         }
-
-        return newCandidateList.get((int)(newCandidateList.size()*Math.random()));
+        for (Point p: pointsToRemove){
+            candidateList.remove(p);
+        }
+        return candidateList.get((int)(candidateList.size()*Math.random()));
     }
 
     private Point generatePoint() {
