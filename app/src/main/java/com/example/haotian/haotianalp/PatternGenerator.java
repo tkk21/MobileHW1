@@ -47,14 +47,12 @@ public class PatternGenerator
         Point initPoint = generatePoint();
         pattern.add(initPoint);
 
-        List<Point> candidateList;
-
         for (int i = 0; i < Defaults.PATTERN_MAX-1; i++) {
-            candidateList  = generateCandidateList(pattern);
+            List<Point> candidateList  = generateCandidateList(pattern);
             Point p =getNextNode(candidateList, initPoint);
             pattern.add(p);
             initPoint = p;
-//            candidateList.remove(p);
+            candidateList.remove(p);//prob not needed
         }
         for (Point p : pattern) {
             Log.d("debug", "the point is: " + p.x + ", "+ p.y);
