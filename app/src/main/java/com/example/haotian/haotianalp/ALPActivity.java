@@ -83,10 +83,13 @@ public class ALPActivity extends Activity {
         mGenerateButton.setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Log.d("fucker highlight", "highlight is: " + mPatternView.getHighlightMode());
-                        Log.d("fucker cockblock practice", "practice mode is: " + mPatternView.getPracticeMode());
-                        mPatternView.setPattern(mGenerator.getPattern());
-                        mPatternView.invalidate();
+
+                        if (!mPatternView.getPracticeMode()) {
+                            Log.d("fucker highlight", "highlight is: " + mPatternView.getHighlightMode());
+                            Log.d("fucker cockblock practice", "practice mode is: " + mPatternView.getPracticeMode());
+                            mPatternView.setPattern(mGenerator.getPattern());
+                            mPatternView.invalidate();
+                        }
                     }
                 }
         );
