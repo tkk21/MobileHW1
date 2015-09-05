@@ -86,7 +86,7 @@ public class PatternGenerator
             deltaX = p.x - initPoint.x;
             deltaY = p.y - initPoint.y;
 
-            gcd = computeGcd(deltaX, deltaY);
+            gcd = computeGcd(Math.abs(deltaX), Math.abs((deltaY)));
 
             if (gcd > 1) {
 
