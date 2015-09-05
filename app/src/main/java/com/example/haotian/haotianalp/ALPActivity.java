@@ -85,8 +85,6 @@ public class ALPActivity extends Activity {
                     public void onClick(View v) {
 
                         if (!mPatternView.getPracticeMode()) {
-                            Log.d("fucker highlight", "highlight is: " + mPatternView.getHighlightMode());
-                            Log.d("fucker cockblock practice", "practice mode is: " + mPatternView.getPracticeMode());
                             mPatternView.setPattern(mGenerator.getPattern());
                             mPatternView.invalidate();
                         }
