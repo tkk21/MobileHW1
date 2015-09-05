@@ -55,4 +55,8 @@ public class TouchDataObject {
     public void setVelocity_Y(double velocity_Y) {
         this.velocity_Y = velocity_Y;
     }
+
+    public String toString (){
+        return String.format("%f,%f,%f,%f,%f,%f", position_X, position_y, velocity_X, velocity_Y, pressure, size);
+    }
 }
