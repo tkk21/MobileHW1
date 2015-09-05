@@ -23,7 +23,7 @@ public class TouchDataObject {
         this.pressure = pressure;
         this.size = size;
     }
-    
+
     public double getPosition_X() {
         return position_X;
     }
@@ -46,5 +46,13 @@ public class TouchDataObject {
 
     public double getSize() {
         return size;
+    }
+
+    public void setVelocity_X(double velocity_X) {
+        this.velocity_X = velocity_X;
+    }
+
+    public void setVelocity_Y(double velocity_Y) {
+        this.velocity_Y = velocity_Y;
     }
 }
