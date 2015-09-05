@@ -106,7 +106,7 @@ public class PatternGenerator
             }
         }
 
-        return newCandidateList.get((int)(candidateList.size()*Math.random()));
+        return newCandidateList.get((int)(newCandidateList.size()*Math.random()));
     }
 
     private Point generatePoint() {
