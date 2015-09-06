@@ -12,7 +12,23 @@ public class SensorEventData implements EventData{
 
     private String timestamp;
     private float accX;
-    
+    private float accY;
+    private float accZ;
+    private float magX;
+    private float magY;
+    private float magZ;
+    private float gyrX;
+    private float gyrY;
+    private float gyrZ;
+    private float rotX;
+    private float rotY;
+    private float rotZ;
+    private float linAccX;
+    private float linAccY;
+    private float linAccZ;
+    private float gravX;
+    private float gravY;
+    private float gravZ;
     public SensorEventData (SensorManager sensorManager){
         Long ts = System.currentTimeMillis();
         timestamp = ts.toString();

@@ -24,30 +24,6 @@ public class MotionEventData implements EventData{
         this.size = size;
     }
 
-    public float getPosition_X() {
-        return position_X;
-    }
-
-    public float getPosition_y() {
-        return position_y;
-    }
-
-    public float getVelocity_X() {
-        return velocity_X;
-    }
-
-    public float getVelocity_Y() {
-        return velocity_Y;
-    }
-
-    public float getPressure() {
-        return pressure;
-    }
-
-    public float getSize() {
-        return size;
-    }
-
     public void setVelocity_X(float velocity_X) {
         this.velocity_X = velocity_X;
     }
