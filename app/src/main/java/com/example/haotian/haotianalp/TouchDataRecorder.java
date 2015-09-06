@@ -5,6 +5,7 @@ import android.content.ContextWrapper;
 import android.util.Log;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -52,8 +53,9 @@ public class TouchDataRecorder {
         if (outputStream == null) {
             try {
 //                outputStream =  new FileOutputStream(cw.getDir("DCIM/"+filename, Context.MODE_PRIVATE));
-                outputStream = context.openFileOutput(filename, context.MODE_APPEND);
-                Log.d("App directory", context.getFilesDir().getAbsolutePath());
+                File file = new File(context.getFilesDir(), filename);
+                outputStream = new FileOutputStream(file);
+                Log.d("file is at: ", file.getAbsolutePath());
             } catch (IOException ex) {
                 Log.wtf("touch data recorder", "failed to create a new file writer");
             }
