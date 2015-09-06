@@ -120,6 +120,12 @@ public class ALPActivity extends Activity implements SensorEventListener{
 
 
         updateFromPrefs();
+        mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager.registerListener(this, mMagnetometer, SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager.registerListener(this, mGyroscope, SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager.registerListener(this, mRotation, SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager.registerListener(this, myLinearAcc, SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager.registerListener(this, mGravity, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
@@ -133,6 +139,7 @@ public class ALPActivity extends Activity implements SensorEventListener{
     protected void onPause() {
 
         super.onPause();
+        mSensorManager.unregisterListener(this);
 
     }
 
