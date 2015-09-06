@@ -200,6 +200,7 @@ public class LockPatternView extends View
         {
             mode = mPracticeSuccessMode;
             testResult = "true";
+            //CALL WRITE DATA HERE
         }
         else{
             testResult = "false";
