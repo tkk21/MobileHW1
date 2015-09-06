@@ -25,7 +25,7 @@ public class TouchDataRecorder {
         this.context = context;
     }
 
-    public void writeData(MotionEventData touch){
+    public void writeData(EventData touch){
         initialize();
         try {
             outputStream.write(touch.toString().getBytes());
