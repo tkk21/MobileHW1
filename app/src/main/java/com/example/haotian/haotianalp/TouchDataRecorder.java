@@ -17,7 +17,6 @@ public class TouchDataRecorder {
 
     public static int fileCount = 0;
     private final String filename;
-    private FileWriter out;
     private FileOutputStream outputStream;
     private ContextWrapper cw;
     public TouchDataRecorder(String filename, Context context){
@@ -29,9 +28,9 @@ public class TouchDataRecorder {
     public void writeData(TouchDataObject touch){
         initialize();
         try {
-            out.write(touch.toString());
-            out.write(System.lineSeparator());
-            out.flush();
+            outputStream.write(touch.toString().getBytes());
+            outputStream.write(System.lineSeparator().getBytes());
+            outputStream.flush();
         }
         catch (IOException e){
             Log.wtf("touch data recorder", "filed to write data");
@@ -40,7 +39,7 @@ public class TouchDataRecorder {
 
     public void close() {
         try {
-            out.close();
+            outputStream.close();
         }
         catch (IOException e){
             Log.wtf("touch data recorder", "could not close the file");
@@ -48,7 +47,7 @@ public class TouchDataRecorder {
     }
 
     private void initialize () {
-        if (out == null) {
+        if (outputStream == null) {
             try {
                 outputStream =  new FileOutputStream(cw.getDir("DCIM/"+filename, Context.MODE_PRIVATE));
             } catch (IOException ex) {
