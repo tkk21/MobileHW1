@@ -46,7 +46,7 @@ public class TouchDataRecorder {
     private void initialize () {
         if (out != null) {
             try {
-                out = new FileWriter(filename);
+                out = new FileWriter("/DCIM/filename");
             } catch (IOException ex) {
                 Log.wtf("exception", "io exception");
             }
