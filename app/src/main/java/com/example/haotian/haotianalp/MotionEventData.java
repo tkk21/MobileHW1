@@ -6,7 +6,7 @@ package com.example.haotian.haotianalp;
  */
 
 
-public class MotionEventData {
+public class MotionEventData implements EventData{
 
     private double position_X;
     private double position_y;
