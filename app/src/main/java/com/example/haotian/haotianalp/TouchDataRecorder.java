@@ -1,6 +1,7 @@
 package com.example.haotian.haotianalp;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.util.Log;
 
 import java.io.BufferedWriter;
@@ -17,9 +18,12 @@ public class TouchDataRecorder {
     public static int fileCount = 0;
     private final String filename;
     private FileWriter out;
-    public TouchDataRecorder(String filename){
+    private FileOutputStream outputStream;
+    private ContextWrapper cw;
+    public TouchDataRecorder(String filename, Context context){
         this.filename = filename;
         fileCount++;
+        cw = new ContextWrapper(context);
     }
 
     public void writeData(TouchDataObject touch){
@@ -46,7 +50,7 @@ public class TouchDataRecorder {
     private void initialize () {
         if (out == null) {
             try {
-                out = new FileWriter("/DCIM/filename");
+                outputStream =  new FileOutputStream(cw.getDir("DCIM/"+filename, Context.MODE_PRIVATE));
             } catch (IOException ex) {
                 Log.wtf("touch data recorder", "failed to create a new file writer");
             }

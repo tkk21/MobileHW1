@@ -289,7 +289,7 @@ public class LockPatternView extends View
                 if (mTouchDataRecorder != null) {
                     mTouchDataRecorder.close();
                 }
-                mTouchDataRecorder = new TouchDataRecorder(String.format("TouchData%d.csv", TouchDataRecorder.fileCount));
+                mTouchDataRecorder = new TouchDataRecorder(String.format("TouchData%d.csv", TouchDataRecorder.fileCount), getContext());
 
                 if (mVelocityTracker == null) {
                     mVelocityTracker = VelocityTracker.obtain();
