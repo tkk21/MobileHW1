@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class ALPActivity extends Activity {
+public class ALPActivity extends Activity implements SensorEventListener{
     protected LockPatternView mPatternView;
     protected PatternGenerator mGenerator;
     protected Button mGenerateButton;
@@ -103,7 +103,14 @@ public class ALPActivity extends Activity {
 
                     }
                 });
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        mRotation = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        myLinearAcc = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+        mGravity = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
     }
 
     @Override
@@ -144,6 +151,18 @@ public class ALPActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        //call function to write to csv
+    }
+
+    @Override
+    public final void onAccuracyChanged (Sensor sensor, int accuracy){
+        //don't need to do anything
+    }
+
+
 
     private void updateFromPrefs()
     {
