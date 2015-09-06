@@ -52,7 +52,7 @@ public class TouchDataRecorder {
 //                outputStream =  new FileOutputStream(cw.getDir("DCIM/"+filename, Context.MODE_PRIVATE));
                 File file = new File(context.getFilesDir(), filename);
                 outputStream = new FileOutputStream(file);
-                outputStream.write("position_X,position_Y,velocity_X,velocity_Y,pressure,size".getBytes());
+                outputStream.write(MotionEventData.firstRowString().getBytes());
                 outputStream.write(System.lineSeparator().getBytes());
                 outputStream.flush();
                 Log.d("file is at: ", file.getAbsolutePath());

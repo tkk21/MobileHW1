@@ -59,4 +59,8 @@ public class MotionEventData {
     public String toString (){
         return String.format("%f,%f,%f,%f,%f,%f", position_X, position_y, velocity_X, velocity_Y, pressure, size);
     }
+
+    public static String firstRowString() {
+        return "position_X,position_Y,velocity_X,velocity_Y,pressure,size";
+    }
 }
