@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  */
 public class SensorEventData implements EventData{
 
-    private String timestamp;
+    private long timestamp;
     private float accX;
     private float accY;
     private float accZ;
@@ -31,13 +31,9 @@ public class SensorEventData implements EventData{
     private float gravZ;
 
 
-    public SensorEventData (){
-        Long ts = System.currentTimeMillis();
-        timestamp = ts.toString();
-    }
 
-    public SensorEventData(float accX, float accY, float accZ, float magX, float magY, float magZ, float gyrX, float gyrY, float gyrZ, float rotX, float rotY, float rotZ, float linAccX, float linAccY, float linAccZ, float gravX, float gravY, float gravZ) {
-        this();
+    public SensorEventData(long timestamp, float accX, float accY, float accZ, float magX, float magY, float magZ, float gyrX, float gyrY, float gyrZ, float rotX, float rotY, float rotZ, float linAccX, float linAccY, float linAccZ, float gravX, float gravY, float gravZ) {
+        this.timestamp = timestamp;
         this.accX = accX;
         this.accY = accY;
         this.accZ = accZ;
@@ -59,9 +55,9 @@ public class SensorEventData implements EventData{
     }
 
     public String toString () {
-        return String.format(timestamp+",%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f",
-                accX,accY,accZ,magX,magY,magZ,gyrX,gyrY,gyrZ,rotX,rotY,rotZ,linAccX,linAccY,linAccZ,
-                gravX,gravY,gravZ);
+        return String.format("%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f",
+                timestamp,accX,accY,accZ,magX,magY,magZ,gyrX,gyrY,gyrZ,rotX,rotY,rotZ,
+                linAccX,linAccY,linAccZ,gravX,gravY,gravZ);
     }
 
     public static String firstRowString () {
