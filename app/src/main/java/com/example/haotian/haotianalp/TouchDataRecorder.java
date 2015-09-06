@@ -53,6 +53,7 @@ public class TouchDataRecorder {
             try {
 //                outputStream =  new FileOutputStream(cw.getDir("DCIM/"+filename, Context.MODE_PRIVATE));
                 outputStream = context.openFileOutput(filename, context.MODE_APPEND);
+                Log.d("App directory", context.getFilesDir().getAbsolutePath());
             } catch (IOException ex) {
                 Log.wtf("touch data recorder", "failed to create a new file writer");
             }
