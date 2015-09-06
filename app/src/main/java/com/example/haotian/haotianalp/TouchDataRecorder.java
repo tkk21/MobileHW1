@@ -19,10 +19,12 @@ public class TouchDataRecorder {
     private final String filename;
     private FileOutputStream outputStream;
     private ContextWrapper cw;
+    private Context context;
     public TouchDataRecorder(String filename, Context context){
         this.filename = filename;
         fileCount++;
         cw = new ContextWrapper(context);
+        this.context = context;
     }
 
     public void writeData(TouchDataObject touch){
@@ -49,7 +51,8 @@ public class TouchDataRecorder {
     private void initialize () {
         if (outputStream == null) {
             try {
-                outputStream =  new FileOutputStream(cw.getDir("DCIM/"+filename, Context.MODE_PRIVATE));
+//                outputStream =  new FileOutputStream(cw.getDir("DCIM/"+filename, Context.MODE_PRIVATE));
+                outputStream = context.openFileOutput(filename, context.MODE_ENABLE_WRITE_AHEAD_LOGGING);
             } catch (IOException ex) {
                 Log.wtf("touch data recorder", "failed to create a new file writer");
             }
