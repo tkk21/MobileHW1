@@ -6,7 +6,7 @@ package com.example.haotian.haotianalp;
  */
 
 
-public class TouchDataObject {
+public class MotionEventData {
 
     private double position_X;
     private double position_y;
@@ -15,7 +15,7 @@ public class TouchDataObject {
     private double pressure;
     private double size;
 
-    public TouchDataObject(double position_X, double position_y, double velocity_X, double velocity_Y, double pressure, double size) {
+    public MotionEventData(double position_X, double position_y, double velocity_X, double velocity_Y, double pressure, double size) {
         this.position_X = position_X;
         this.position_y = position_y;
         this.velocity_X = velocity_X;

@@ -4,11 +4,8 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.util.Log;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -28,7 +25,7 @@ public class TouchDataRecorder {
         this.context = context;
     }
 
-    public void writeData(TouchDataObject touch){
+    public void writeData(MotionEventData touch){
         initialize();
         try {
             outputStream.write(touch.toString().getBytes());
@@ -55,6 +52,9 @@ public class TouchDataRecorder {
 //                outputStream =  new FileOutputStream(cw.getDir("DCIM/"+filename, Context.MODE_PRIVATE));
                 File file = new File(context.getFilesDir(), filename);
                 outputStream = new FileOutputStream(file);
+                outputStream.write("position_X,position_Y,velocity_X,velocity_Y,pressure,size".getBytes());
+                outputStream.write(System.lineSeparator().getBytes());
+                outputStream.flush();
                 Log.d("file is at: ", file.getAbsolutePath());
             } catch (IOException ex) {
                 Log.wtf("touch data recorder", "failed to create a new file writer");
