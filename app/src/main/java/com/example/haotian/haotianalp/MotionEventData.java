@@ -8,14 +8,14 @@ package com.example.haotian.haotianalp;
 
 public class MotionEventData implements EventData{
 
-    private double position_X;
-    private double position_y;
-    private double velocity_X;
-    private double velocity_Y;
-    private double pressure;
-    private double size;
+    private float position_X;
+    private float position_y;
+    private float velocity_X;
+    private float velocity_Y;
+    private float pressure;
+    private float size;
 
-    public MotionEventData(double position_X, double position_y, double velocity_X, double velocity_Y, double pressure, double size) {
+    public MotionEventData(float position_X, float position_y, float velocity_X, float velocity_Y, float pressure, float size) {
         this.position_X = position_X;
         this.position_y = position_y;
         this.velocity_X = velocity_X;
@@ -24,35 +24,35 @@ public class MotionEventData implements EventData{
         this.size = size;
     }
 
-    public double getPosition_X() {
+    public float getPosition_X() {
         return position_X;
     }
 
-    public double getPosition_y() {
+    public float getPosition_y() {
         return position_y;
     }
 
-    public double getVelocity_X() {
+    public float getVelocity_X() {
         return velocity_X;
     }
 
-    public double getVelocity_Y() {
+    public float getVelocity_Y() {
         return velocity_Y;
     }
 
-    public double getPressure() {
+    public float getPressure() {
         return pressure;
     }
 
-    public double getSize() {
+    public float getSize() {
         return size;
     }
 
-    public void setVelocity_X(double velocity_X) {
+    public void setVelocity_X(float velocity_X) {
         this.velocity_X = velocity_X;
     }
 
-    public void setVelocity_Y(double velocity_Y) {
+    public void setVelocity_Y(float velocity_Y) {
         this.velocity_Y = velocity_Y;
     }
 

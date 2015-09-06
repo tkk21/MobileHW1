@@ -1,17 +1,25 @@
 package com.example.haotian.haotianalp;
 
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+
+import java.sql.Timestamp;
+
 /**
  * Created by ted on 9/6/2015.
  */
 public class SensorEventData implements EventData{
 
-    public SensorEventData (){
-
+    private String timestamp;
+    private float accX;
+    
+    public SensorEventData (SensorManager sensorManager){
+        Long ts = System.currentTimeMillis();
+        timestamp = ts.toString();
     }
 
 
     public String toString () {
-
         return "";
     }
     public static String firstRowString () {
