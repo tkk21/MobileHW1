@@ -25,7 +25,6 @@ import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -73,7 +72,7 @@ public class LockPatternView extends View
     protected List<Point> mPracticePattern;
     protected Set<Point> mPracticePool;
 
-    protected TouchDataObject mTouchDataObject;
+    protected MotionEventData mMotionEventData;
     protected TouchDataRecorder mTouchDataRecorder;
 
     public LockPatternView(Context context, AttributeSet attrs)
@@ -299,7 +298,7 @@ public class LockPatternView extends View
                     mVelocityTracker.clear();
                 }
 
-                mTouchDataObject = new TouchDataObject(event.getX(), event.getY(), mVelocityTracker.getXVelocity(),
+                mMotionEventData = new MotionEventData(event.getX(), event.getY(), mVelocityTracker.getXVelocity(),
                         mVelocityTracker.getYVelocity(),event.getPressure(), event.getSize());
 
                 //Modifications ends here
@@ -364,9 +363,9 @@ public class LockPatternView extends View
 
                 //Modifications starts here
 
-                mTouchDataObject.setVelocity_X(mVelocityTracker.getXVelocity());
-                mTouchDataObject.setVelocity_Y(mVelocityTracker.getYVelocity());
-                mTouchDataRecorder.writeData(mTouchDataObject);
+                mMotionEventData.setVelocity_X(mVelocityTracker.getXVelocity());
+                mMotionEventData.setVelocity_Y(mVelocityTracker.getYVelocity());
+                mTouchDataRecorder.writeData(mMotionEventData);
 
                 //Modifications ends here
 
