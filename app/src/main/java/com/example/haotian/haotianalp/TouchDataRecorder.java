@@ -30,7 +30,7 @@ public class TouchDataRecorder {
             out.flush();
         }
         catch (IOException e){
-
+            Log.wtf("touch data recorder", "filed to write data");
         }
     }
 
@@ -39,20 +39,17 @@ public class TouchDataRecorder {
             out.close();
         }
         catch (IOException e){
-
+            Log.wtf("touch data recorder", "could not close the file");
         }
     }
 
     private void initialize () {
-        if (out != null) {
+        if (out == null) {
             try {
                 out = new FileWriter("/DCIM/filename");
             } catch (IOException ex) {
-                Log.wtf("exception", "io exception");
+                Log.wtf("touch data recorder", "failed to create a new file writer");
             }
-        }
-        else {
-
         }
     }
 }
