@@ -162,6 +162,18 @@ public class ALPActivity extends Activity implements SensorEventListener{
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
+        //what's the point of mAccelerometer
+        SensorEventData sensorEventData = new SensorEventData();
+        sensorEventData.setTimestamp(sensorEvent.timestamp);
+        //sensorEvent.sensor.equals(mAccelerometer)
+        sensorEventData.setAccX(sensorEvent.values[0]);
+        sensorEventData.setAccY(sensorEvent.values[1]);
+        sensorEventData.setAccZ(sensorEvent.values[2]);
+
+
+
+
+
 //        SensorEventData data = new SensorEventData(sensorEvent.timestamp, sensorEvent.
 //        TouchDataRecorder recorder = new TouchDataRecorder(String.format("SensorData%d.csv", TouchDataRecorder.fileCount), )
         //don't have context here how to save?
