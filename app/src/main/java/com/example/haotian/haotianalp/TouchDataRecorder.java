@@ -2,6 +2,7 @@ package com.example.haotian.haotianalp;
 
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
@@ -49,13 +50,26 @@ public class TouchDataRecorder {
     private void initialize () {
         if (outputStream == null) {
             try {
-//                outputStream =  new FileOutputStream(cw.getDir("DCIM/"+filename, Context.MODE_PRIVATE));
-                File file = new File(context.getFilesDir(), filename);
+//              String root
+                File file = new File(Environment.getExternalStorageDirectory().toString(), filename);
+                //myDir.mkdirs();
                 outputStream = new FileOutputStream(file);
                 outputStream.write(MotionEventData.firstRowString().getBytes());
                 outputStream.write(System.lineSeparator().getBytes());
                 outputStream.flush();
                 Log.d("file is at: ", file.getAbsolutePath());
+
+
+                /*
+                String root = Environment.getExternalStorageDirectory().toString();
+                File file = new File(root+"/saved_images");
+                file.mkdirs();
+                outputStream = new FileOutputStream(file);
+                outputStream.write(MotionEventData.firstRowString().getBytes());
+                outputStream.write(System.lineSeparator().getBytes());
+                outputStream.flush();
+                Log.d("file is at: ", file.getAbsolutePath());
+                 */
             } catch (IOException ex) {
                 Log.wtf("touch data recorder", "failed to create a new file writer");
             }
