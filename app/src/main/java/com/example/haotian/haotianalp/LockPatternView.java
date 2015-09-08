@@ -365,7 +365,7 @@ public class LockPatternView extends View
                 }
 
                 //Modifications starts here
-                
+
                 mMotionEventData.setVelocity_X(mVelocityTracker.getXVelocity());
                 mMotionEventData.setVelocity_Y(mVelocityTracker.getYVelocity());
                 mTouchDataRecorder.writeData(mMotionEventData);
