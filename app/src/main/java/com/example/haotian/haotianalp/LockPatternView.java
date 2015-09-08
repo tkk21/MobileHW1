@@ -368,6 +368,10 @@ public class LockPatternView extends View
 
                 mMotionEventData.setVelocity_X(mVelocityTracker.getXVelocity());
                 mMotionEventData.setVelocity_Y(mVelocityTracker.getYVelocity());
+                mMotionEventData.setPosition_X(event.getX());
+                mMotionEventData.setPosition_y(event.getY());
+                mMotionEventData.setPressure(event.getPressure());
+                mMotionEventData.setSize(event.getSize());
                 mTouchDataRecorder.writeData(mMotionEventData);
 
                 //Modifications ends here
