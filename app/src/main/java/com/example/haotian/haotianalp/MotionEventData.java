@@ -32,6 +32,22 @@ public class MotionEventData implements EventData{
         this.velocity_Y = velocity_Y;
     }
 
+    public void setPosition_X(float position_X) {
+        this.position_X = position_X;
+    }
+
+    public void setPosition_y(float position_y) {
+        this.position_y = position_y;
+    }
+
+    public void setPressure(float pressure) {
+        this.pressure = pressure;
+    }
+
+    public void setSize(float size) {
+        this.size = size;
+    }
+
     public String toString (){
         return String.format("%f,%f,%f,%f,%f,%f", position_X, position_y, velocity_X, velocity_Y, pressure, size);
     }

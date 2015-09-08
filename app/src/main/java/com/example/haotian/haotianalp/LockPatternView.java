@@ -75,7 +75,7 @@ public class LockPatternView extends View
     protected Set<Point> mPracticePool;
 
     protected MotionEventData mMotionEventData;
-    protected TouchDataRecorder mTouchDataRecorder;
+    protected DataRecorder mDataRecorder;
 
     public LockPatternView(Context context, AttributeSet attrs)
     {
@@ -288,10 +288,8 @@ public class LockPatternView extends View
                 mDrawTouchExtension = true;
 
                 //Modifications starts here
-                if (mTouchDataRecorder != null) {
-                    mTouchDataRecorder.close();
-                }
-                mTouchDataRecorder = new TouchDataRecorder(String.format("TouchData%d.csv", TouchDataRecorder.fileCount), TouchDataRecorder.EventDataType.MotionEventData);
+
+                mDataRecorder = new DataRecorder(String.format("TouchData%d.txt", DataRecorder.fileCount), DataRecorder.EventDataType.MotionEventData);//change txt back to csv
 
                 if (mVelocityTracker == null) {
                     mVelocityTracker = VelocityTracker.obtain();
@@ -299,6 +297,7 @@ public class LockPatternView extends View
                 else {
                     mVelocityTracker.clear();
                 }
+                mVelocityTracker.addMovement(event);
 
                 Log.d("external storage", Environment.getExternalStorageDirectory().toString());
                 mMotionEventData = new MotionEventData(event.getX(), event.getY(), mVelocityTracker.getXVelocity(),
@@ -365,10 +364,16 @@ public class LockPatternView extends View
                 }
 
                 //Modifications starts here
+                mVelocityTracker.addMovement(event);
+                mVelocityTracker.computeCurrentVelocity(1000);//1 pixel per second
 
                 mMotionEventData.setVelocity_X(mVelocityTracker.getXVelocity());
                 mMotionEventData.setVelocity_Y(mVelocityTracker.getYVelocity());
-                mTouchDataRecorder.writeData(mMotionEventData);
+                mMotionEventData.setPosition_X(event.getX());
+                mMotionEventData.setPosition_y(event.getY());
+                mMotionEventData.setPressure(event.getPressure());
+                mMotionEventData.setSize(event.getSize());
+                mDataRecorder.writeData(mMotionEventData);
 
                 //Modifications ends here
 
@@ -376,6 +381,9 @@ public class LockPatternView extends View
             case MotionEvent.ACTION_UP:
                 mDrawTouchExtension = false;
                 testPracticePattern();
+                if (mDataRecorder != null) {
+                    mDataRecorder.close();
+                }
                 break;
             default:
                 return super.onTouchEvent(event);
