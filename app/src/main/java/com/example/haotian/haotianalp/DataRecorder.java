@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class TouchDataRecorder {
+public class DataRecorder {
 
     enum EventDataType{
         MotionEventData, SensorEventData;
@@ -18,7 +18,7 @@ public class TouchDataRecorder {
     private final String filename;
     private FileOutputStream outputStream;
     private EventDataType eventDataType;
-    public TouchDataRecorder(String filename, EventDataType eventDataType){
+    public DataRecorder(String filename, EventDataType eventDataType){
         this.filename = filename;
         fileCount++;
         this.eventDataType = eventDataType;
