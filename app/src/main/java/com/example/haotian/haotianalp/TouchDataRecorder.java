@@ -9,17 +9,19 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-/**
- * Created by Anna on 9/5/2015.
- */
 public class TouchDataRecorder {
 
+    enum EventDataType{
+        MotionEventData, SensorEventData;
+    }
     public static int fileCount = 0;
     private final String filename;
     private FileOutputStream outputStream;
-    public TouchDataRecorder(String filename, Context context){
+    private EventDataType eventDataType;
+    public TouchDataRecorder(String filename, EventDataType eventDataType){
         this.filename = filename;
         fileCount++;
+        this.eventDataType = eventDataType;
     }
 
     public void writeData(EventData touch){
@@ -52,7 +54,17 @@ public class TouchDataRecorder {
                 csvDir.mkdir();
                 File file = new File(csvDir, filename);
                 outputStream = new FileOutputStream(file);
-                outputStream.write(MotionEventData.firstRowString().getBytes());
+
+                switch(eventDataType){
+                    case MotionEventData:
+                        outputStream.write(MotionEventData.firstRowString().getBytes());
+                        break;
+                    case SensorEventData:
+                        outputStream.write(SensorEventData.firstRowString().getBytes());
+                        break;
+                    default:
+                        break;
+                }
                 outputStream.write(System.lineSeparator().getBytes());
                 outputStream.flush();
                 Log.d("file is at: ", file.getAbsolutePath());

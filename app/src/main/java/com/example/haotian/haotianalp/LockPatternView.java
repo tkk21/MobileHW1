@@ -22,9 +22,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -199,6 +201,7 @@ public class LockPatternView extends View
         {
             mode = mPracticeSuccessMode;
             testResult = "true";
+            //CALL WRITE DATA HERE
         }
         else{
             testResult = "false";
@@ -297,6 +300,7 @@ public class LockPatternView extends View
                     mVelocityTracker.clear();
                 }
 
+                Log.d("external storage", Environment.getExternalStorageDirectory().toString());
                 mMotionEventData = new MotionEventData(event.getX(), event.getY(), mVelocityTracker.getXVelocity(),
                         mVelocityTracker.getYVelocity(),event.getPressure(), event.getSize());
 
