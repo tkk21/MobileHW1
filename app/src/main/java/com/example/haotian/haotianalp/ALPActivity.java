@@ -11,6 +11,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.text.method.Touch;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -161,7 +162,9 @@ public class ALPActivity extends Activity implements SensorEventListener{
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        //call function to write to csv
+//        SensorEventData data = new SensorEventData(sensorEvent.timestamp, sensorEvent.
+//        TouchDataRecorder recorder = new TouchDataRecorder(String.format("SensorData%d.csv", TouchDataRecorder.fileCount), )
+        //don't have context here how to save?
     }
 
     @Override

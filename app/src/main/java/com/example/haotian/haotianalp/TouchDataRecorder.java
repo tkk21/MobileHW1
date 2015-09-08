@@ -2,6 +2,7 @@ package com.example.haotian.haotianalp;
 
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.os.Environment;
 import android.util.Log;
 
 import java.io.File;
@@ -16,13 +17,9 @@ public class TouchDataRecorder {
     public static int fileCount = 0;
     private final String filename;
     private FileOutputStream outputStream;
-    private ContextWrapper cw;
-    private Context context;
     public TouchDataRecorder(String filename, Context context){
         this.filename = filename;
         fileCount++;
-        cw = new ContextWrapper(context);
-        this.context = context;
     }
 
     public void writeData(EventData touch){
@@ -49,8 +46,11 @@ public class TouchDataRecorder {
     private void initialize () {
         if (outputStream == null) {
             try {
-//                outputStream =  new FileOutputStream(cw.getDir("DCIM/"+filename, Context.MODE_PRIVATE));
-                File file = new File(context.getFilesDir(), filename);
+                String root = Environment.getExternalStorageDirectory().toString();
+                Log.d("external storage root is: ", root);
+                File csvDir = new File (root + "/DCIM/");
+                csvDir.mkdir();
+                File file = new File(csvDir, filename);
                 outputStream = new FileOutputStream(file);
                 outputStream.write(MotionEventData.firstRowString().getBytes());
                 outputStream.write(System.lineSeparator().getBytes());
