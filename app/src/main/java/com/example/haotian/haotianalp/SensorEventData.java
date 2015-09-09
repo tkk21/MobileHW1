@@ -2,15 +2,20 @@ package com.example.haotian.haotianalp;
 
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.text.method.DateTimeKeyListener;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by ted on 9/6/2015.
  */
 public class SensorEventData implements EventData{
 
-    private long timestamp;
+    private String timestamp;
     private float accX;
     private float accY;
     private float accZ;
@@ -29,38 +34,21 @@ public class SensorEventData implements EventData{
     private float gravX;
     private float gravY;
     private float gravZ;
+    private boolean[] isRecorded;
 
     public SensorEventData() {
+        isRecorded = new boolean[6];
     }
 
-    public SensorEventData(long timestamp, float accX, float accY, float accZ, float magX, float magY, float magZ, float gyrX, float gyrY, float gyrZ, float rotX, float rotY, float rotZ, float linAccX, float linAccY, float linAccZ, float gravX, float gravY, float gravZ) {
-        this.timestamp = timestamp;
-        this.accX = accX;
-        this.accY = accY;
-        this.accZ = accZ;
-        this.magX = magX;
-        this.magY = magY;
-        this.magZ = magZ;
-        this.gyrX = gyrX;
-        this.gyrY = gyrY;
-        this.gyrZ = gyrZ;
-        this.rotX = rotX;
-        this.rotY = rotY;
-        this.rotZ = rotZ;
-        this.linAccX = linAccX;
-        this.linAccY = linAccY;
-        this.linAccZ = linAccZ;
-        this.gravX = gravX;
-        this.gravY = gravY;
-        this.gravZ = gravZ;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public void setTimestamp() {
+        Date date = new Date(System.currentTimeMillis());
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        this.timestamp = format.format(date);
     }
 
     public void setAccX(float accX) {
         this.accX = accX;
+        isRecorded[0] = true;
     }
 
     public void setAccY(float accY) {
@@ -73,6 +61,7 @@ public class SensorEventData implements EventData{
 
     public void setMagX(float magX) {
         this.magX = magX;
+        isRecorded[1] = true;
     }
 
     public void setMagY(float magY) {
@@ -85,6 +74,7 @@ public class SensorEventData implements EventData{
 
     public void setGyrX(float gyrX) {
         this.gyrX = gyrX;
+        isRecorded[2] = true;
     }
 
     public void setGyrY(float gyrY) {
@@ -97,6 +87,7 @@ public class SensorEventData implements EventData{
 
     public void setRotX(float rotX) {
         this.rotX = rotX;
+        isRecorded[3] = true;
     }
 
     public void setRotY(float rotY) {
@@ -109,6 +100,7 @@ public class SensorEventData implements EventData{
 
     public void setLinAccX(float linAccX) {
         this.linAccX = linAccX;
+        isRecorded[4] = true;
     }
 
     public void setLinAccY(float linAccY) {
@@ -121,6 +113,7 @@ public class SensorEventData implements EventData{
 
     public void setGravX(float gravX) {
         this.gravX = gravX;
+        isRecorded[5] = true;
     }
 
     public void setGravY(float gravY) {
@@ -131,8 +124,18 @@ public class SensorEventData implements EventData{
         this.gravZ = gravZ;
     }
 
+    public boolean isComplete() {
+        boolean isComplete = true;
+
+        for (int i = 0; i < isRecorded.length; i++) {
+            isComplete &= isRecorded[i];
+        }
+
+        return isComplete;
+    }
+
     public String toString () {
-        return String.format("%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f",
+        return String.format("%s,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f",
                 timestamp,accX,accY,accZ,magX,magY,magZ,gyrX,gyrY,gyrZ,rotX,rotY,rotZ,
                 linAccX,linAccY,linAccZ,gravX,gravY,gravZ);
     }

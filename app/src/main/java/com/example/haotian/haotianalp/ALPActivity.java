@@ -51,6 +51,7 @@ public class ALPActivity extends Activity implements SensorEventListener{
     protected int mPatternMax=0;
     protected String mHighlightMode;
     protected boolean mTactileFeedback;
+    protected SensorEventData sensorEventData;
 
     private static final String TAG = "SensorActivity";
     private static final String TAGmotion = "motionEvent";
@@ -114,6 +115,7 @@ public class ALPActivity extends Activity implements SensorEventListener{
         myLinearAcc = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         mGravity = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
         mDataRecorder = new DataRecorder(String.format("SensorData%d.txt", DataRecorder.fileCount), DataRecorder.EventDataType.SensorEventData);
+        sensorEventData = new SensorEventData();
     }
 
     @Override
@@ -164,9 +166,8 @@ public class ALPActivity extends Activity implements SensorEventListener{
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        //what's the point of mAccelerometer
-        SensorEventData sensorEventData = new SensorEventData();
-        sensorEventData.setTimestamp(sensorEvent.timestamp);
+
+        sensorEventData.setTimestamp();
         switch (sensorEvent.sensor.getType()) {
             case Sensor.TYPE_ACCELEROMETER:
                 sensorEventData.setAccX(sensorEvent.values[0]);
@@ -202,7 +203,12 @@ public class ALPActivity extends Activity implements SensorEventListener{
                 Log.d("onSensorChanged", "a sensor event that shouldn't happen, happened");
                 break;
         }
-        mDataRecorder.writeData(sensorEventData);
+
+        if (sensorEventData.isComplete()) {
+            mDataRecorder.writeData(sensorEventData);
+            sensorEventData = new SensorEventData();
+        }
+
     }
 
     @Override
