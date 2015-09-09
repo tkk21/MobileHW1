@@ -14,6 +14,9 @@
         <option name="COMPILE_JAVA_TASK_NAME" value="compileDebugSources" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 3c7bf7f... idk xml stuff
 =======
 >>>>>>> parent of 3c7bf7f... idk xml stuff
         <option name="SOURCE_GEN_TASK_NAME" value="generateDebugSources" />
@@ -103,4 +106,7 @@
 </module>
 =======
 </module>
+<<<<<<< HEAD
+>>>>>>> parent of 3c7bf7f... idk xml stuff
+=======
 >>>>>>> parent of 3c7bf7f... idk xml stuff
