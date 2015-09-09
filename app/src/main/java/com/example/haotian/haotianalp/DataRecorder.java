@@ -16,9 +16,16 @@ public class DataRecorder {
     private FileOutputStream outputStream;
     private EventData eventData;
     public DataRecorder(String filename, EventData data){
+        this(filename);
+        this.eventData = data;
+    }
+    public DataRecorder (String filename){
         this.filename = filename;
         fileCount++;
-        this.eventData = data;
+    }
+
+    public void setEventData(EventData eventData) {
+        this.eventData = eventData;
     }
 
     public void writeData(){
@@ -45,11 +52,7 @@ public class DataRecorder {
     private void initialize () {
         if (outputStream == null) {
             try {
-                Log.d("state of the external storage", Environment.getExternalStorageState());
-                Log.d("external storage emulated?: ", ""+Environment.isExternalStorageEmulated());
-                Log.d("external storage removeable?: ", ""+Environment.isExternalStorageRemovable());
-                        String root = Environment.getExternalStorageDirectory().toString();
-                Log.d("external storage root is: ", root);
+                String root = Environment.getExternalStorageDirectory().toString();
                 File csvDir = new File (root + "/DCIM/");
                 csvDir.mkdir();
                 File file = new File(csvDir, filename);

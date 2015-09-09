@@ -58,6 +58,7 @@ public class ALPActivity extends Activity implements SensorEventListener{
 
     public List<Sensor> deviceSensors;
     private  Sensor mAccelerometer, mMagnetometer, mGyroscope, mRotation, mGravity, myLinearAcc;
+    private DataRecorder mDataRecorder;
 
     private File file;
     public static String[] mLine;
@@ -112,6 +113,7 @@ public class ALPActivity extends Activity implements SensorEventListener{
         mRotation = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
         myLinearAcc = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         mGravity = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
+        mDataRecorder = new DataRecorder(String.format("SensorData%d.txt", DataRecorder.fileCount));
     }
 
     @Override
@@ -127,6 +129,7 @@ public class ALPActivity extends Activity implements SensorEventListener{
         mSensorManager.registerListener(this, mRotation, SensorManager.SENSOR_DELAY_NORMAL);
         mSensorManager.registerListener(this, myLinearAcc, SensorManager.SENSOR_DELAY_NORMAL);
         mSensorManager.registerListener(this, mGravity, SensorManager.SENSOR_DELAY_NORMAL);
+        mDataRecorder = new DataRecorder(String.format("SensorData%d.txt", DataRecorder.fileCount));
     }
 
     @Override
@@ -138,10 +141,9 @@ public class ALPActivity extends Activity implements SensorEventListener{
 
     @Override
     protected void onPause() {
-
         super.onPause();
         mSensorManager.unregisterListener(this);
-
+        mDataRecorder.close();
     }
 
 
@@ -165,18 +167,43 @@ public class ALPActivity extends Activity implements SensorEventListener{
         //what's the point of mAccelerometer
         SensorEventData sensorEventData = new SensorEventData();
         sensorEventData.setTimestamp(sensorEvent.timestamp);
-        //sensorEvent.sensor.equals(mAccelerometer)
-        sensorEventData.setAccX(sensorEvent.values[0]);
-        sensorEventData.setAccY(sensorEvent.values[1]);
-        sensorEventData.setAccZ(sensorEvent.values[2]);
-
-
-
-
-
-//        SensorEventData data = new SensorEventData(sensorEvent.timestamp, sensorEvent.
-//        TouchDataRecorder recorder = new TouchDataRecorder(String.format("SensorData%d.csv", TouchDataRecorder.fileCount), )
-        //don't have context here how to save?
+        switch (sensorEvent.sensor.getType()) {
+            case Sensor.TYPE_ACCELEROMETER:
+                sensorEventData.setAccX(sensorEvent.values[0]);
+                sensorEventData.setAccY(sensorEvent.values[1]);
+                sensorEventData.setAccZ(sensorEvent.values[2]);
+                break;
+            case Sensor.TYPE_MAGNETIC_FIELD:
+                sensorEventData.setMagX(sensorEvent.values[0]);
+                sensorEventData.setMagY(sensorEvent.values[1]);
+                sensorEventData.setMagZ(sensorEvent.values[2]);
+                break;
+            case Sensor.TYPE_GYROSCOPE:
+                sensorEventData.setGyrX(sensorEvent.values[0]);
+                sensorEventData.setGyrY(sensorEvent.values[1]);
+                sensorEventData.setGyrZ(sensorEvent.values[2]);
+                break;
+            case Sensor.TYPE_ROTATION_VECTOR:
+                sensorEventData.setRotX(sensorEvent.values[0]);
+                sensorEventData.setRotY(sensorEvent.values[1]);
+                sensorEventData.setRotZ(sensorEvent.values[2]);
+                break;
+            case Sensor.TYPE_LINEAR_ACCELERATION:
+                sensorEventData.setLinAccX(sensorEvent.values[0]);
+                sensorEventData.setLinAccY(sensorEvent.values[1]);
+                sensorEventData.setLinAccZ(sensorEvent.values[2]);
+                break;
+            case Sensor.TYPE_GRAVITY:
+                sensorEventData.setGravX(sensorEvent.values[0]);
+                sensorEventData.setGravY(sensorEvent.values[1]);
+                sensorEventData.setGravZ(sensorEvent.values[2]);
+                break;
+            default:
+                Log.d("onSensorChanged", "a sensor event that shouldn't happen, happened");
+                break;
+        }
+        mDataRecorder.setEventData(sensorEventData);
+        mDataRecorder.writeData();
     }
 
     @Override
