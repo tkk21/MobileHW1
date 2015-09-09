@@ -33,28 +33,6 @@ public class SensorEventData implements EventData{
     public SensorEventData() {
     }
 
-    public SensorEventData(long timestamp, float accX, float accY, float accZ, float magX, float magY, float magZ, float gyrX, float gyrY, float gyrZ, float rotX, float rotY, float rotZ, float linAccX, float linAccY, float linAccZ, float gravX, float gravY, float gravZ) {
-        this.timestamp = timestamp;
-        this.accX = accX;
-        this.accY = accY;
-        this.accZ = accZ;
-        this.magX = magX;
-        this.magY = magY;
-        this.magZ = magZ;
-        this.gyrX = gyrX;
-        this.gyrY = gyrY;
-        this.gyrZ = gyrZ;
-        this.rotX = rotX;
-        this.rotY = rotY;
-        this.rotZ = rotZ;
-        this.linAccX = linAccX;
-        this.linAccY = linAccY;
-        this.linAccZ = linAccZ;
-        this.gravX = gravX;
-        this.gravY = gravY;
-        this.gravZ = gravZ;
-    }
-
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
