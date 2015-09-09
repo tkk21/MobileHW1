@@ -5,5 +5,4 @@ package com.example.haotian.haotianalp;
  */
 public interface EventData {
     public String toString();
-    public String firstRowString();
 }
