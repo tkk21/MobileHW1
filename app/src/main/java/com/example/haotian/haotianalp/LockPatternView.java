@@ -289,7 +289,7 @@ public class LockPatternView extends View
 
                 //Modifications starts here
 
-                mDataRecorder = new DataRecorder(String.format("TouchData%d.txt", DataRecorder.fileCount), DataRecorder.EventDataType.MotionEventData);//change txt back to csv
+                mDataRecorder = new DataRecorder(String.format("TouchData%d.txt", DataRecorder.fileCount), mMotionEventData);//change txt back to csv
 
                 if (mVelocityTracker == null) {
                     mVelocityTracker = VelocityTracker.obtain();
@@ -373,7 +373,7 @@ public class LockPatternView extends View
                 mMotionEventData.setPosition_y(event.getY());
                 mMotionEventData.setPressure(event.getPressure());
                 mMotionEventData.setSize(event.getSize());
-                mDataRecorder.writeData(mMotionEventData);
+                mDataRecorder.writeData();
 
                 //Modifications ends here
 

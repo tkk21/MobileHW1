@@ -11,23 +11,20 @@ import java.io.IOException;
 
 public class DataRecorder {
 
-    enum EventDataType{
-        MotionEventData, SensorEventData;
-    }
     public static int fileCount = 0;
     private final String filename;
     private FileOutputStream outputStream;
-    private EventDataType eventDataType;
-    public DataRecorder(String filename, EventDataType eventDataType){
+    private EventData eventData;
+    public DataRecorder(String filename, EventData data){
         this.filename = filename;
         fileCount++;
-        this.eventDataType = eventDataType;
+        this.eventData = data;
     }
 
-    public void writeData(EventData touch){
+    public void writeData(){
         initialize();
         try {
-            outputStream.write(touch.toString().getBytes());
+            outputStream.write(eventData.toString().getBytes());
             outputStream.write(System.lineSeparator().getBytes());
             outputStream.flush();
         }
@@ -60,17 +57,7 @@ public class DataRecorder {
                     file.delete();
                 }
                 outputStream = new FileOutputStream(file);
-
-                switch(eventDataType){
-                    case MotionEventData:
-                        outputStream.write(MotionEventData.firstRowString().getBytes());
-                        break;
-                    case SensorEventData:
-                        outputStream.write(SensorEventData.firstRowString().getBytes());
-                        break;
-                    default:
-                        break;
-                }
+                outputStream.write(eventData.firstRowString().getBytes());
                 outputStream.write(System.lineSeparator().getBytes());
                 outputStream.flush();
                 Log.d("file is at: ", file.getAbsolutePath());
