@@ -12,3 +12,5 @@
 .idea/gradle.xml
 .idea/modules.xml
 .idea/*
+.idea/gradle.xml
+app/app.iml
