@@ -88,14 +88,14 @@ public class DataRecorder {
                         bufferedWriter.write(SensorEventData.firstRowString());
                         break;
                     case MergedEventData:
-                        if (fileExists) {
+                        if (!fileExists) {
                             bufferedWriter.write(MergedEventData.firstRowString());
                         }
                         break;
                     default:
                         break;
                 }
-                if (!isMergedEventData || (isMergedEventData && !file.exists())) {
+                if (!isMergedEventData || (isMergedEventData && !fileExists)) {
                     bufferedWriter.append(System.lineSeparator());
                 }
                 bufferedWriter.flush();
