@@ -14,13 +14,11 @@ public class DataRecorder {
     enum EventDataType{
         MotionEventData, SensorEventData, MergedEventData;
     }
-    public static int fileCount = 0;
     private final String filename;
     private BufferedWriter bufferedWriter;
     private EventDataType eventDataType;
     public DataRecorder(String filename, EventDataType eventDataType){
         this.filename = filename;
-        fileCount++;
         this.eventDataType = eventDataType;
     }
 
@@ -43,7 +41,9 @@ public class DataRecorder {
 
         for (int i = 0; i<sensorEventDataList.size(); i++){
             try{
-                bufferedWriter.append(sensorEventDataList.get(i)+","+motionEventDataList.get(i)+","+PatternGenerator.patternToString(data.getPattern())+","+data.getCounter());
+                bufferedWriter.append(sensorEventDataList.get(i)+","+motionEventDataList.get(i)+","
+                        +PatternGenerator.patternToString(data.getPattern())+","+data.getCounter());
+                bufferedWriter.append(System.lineSeparator());
             }
             catch(IOException e){
                 Log.wtf("data recorder", "failed to write merged data");
@@ -71,12 +71,13 @@ public class DataRecorder {
             try {
                 String root = Environment.getExternalStorageDirectory().toString();
                 File csvDir = new File (root + "/DCIM/");
+                boolean isMergedEventData = eventDataType.equals(EventDataType.MergedEventData);
                 csvDir.mkdir();
                 File file = new File(csvDir, filename);
-                if (file.exists()){
+                if (file.exists() && !isMergedEventData){
                     file.delete();
                 }
-                bufferedWriter = new BufferedWriter(new FileWriter (file));
+                bufferedWriter = new BufferedWriter(new FileWriter (file, true));
 
                 switch(eventDataType){
                     case MotionEventData:

@@ -104,6 +104,8 @@ public class LockPatternView extends View
         mEdgePaint.setFlags(Paint.ANTI_ALIAS_FLAG);
 
         testResult = "false";
+
+        mMergedEventData = new MergedEventData();
     }
 
     public void setSensorEventData (SensorEventData sensorEventData){
@@ -210,6 +212,8 @@ public class LockPatternView extends View
             //CALL WRITE DATA HERE
             DataRecorder mergedDataRecorder = new DataRecorder("MergedData.csv", DataRecorder.EventDataType.MergedEventData);
             mergedDataRecorder.writeBulkData(mMergedEventData);
+            mMergedEventData.incrementCounter();
+            mMergedEventData.init();
             mergedDataRecorder.close();
 
 
@@ -303,7 +307,7 @@ public class LockPatternView extends View
 
                 //Modifications starts here
 
-                mDataRecorder = new DataRecorder(String.format("TouchData%d.csv", DataRecorder.fileCount), DataRecorder.EventDataType.MotionEventData);//change txt back to csv
+                mDataRecorder = new DataRecorder("TouchData.csv", DataRecorder.EventDataType.MotionEventData);//change txt back to csv
 
                 if (mVelocityTracker == null) {
                     mVelocityTracker = VelocityTracker.obtain();
@@ -314,7 +318,8 @@ public class LockPatternView extends View
                 mVelocityTracker.addMovement(event);
                 mMotionEventData = new MotionEventData(event.getX(), event.getY(), mVelocityTracker.getXVelocity(),
                         mVelocityTracker.getYVelocity(),event.getPressure(), event.getSize());
-                mMergedEventData = new MergedEventData(mCurrentPattern);
+                mMergedEventData.setPattern(mCurrentPattern);
+
                 //Modifications ends here
 
             case MotionEvent.ACTION_MOVE:

@@ -63,7 +63,7 @@ public class PatternGenerator
     public static String patternToString(List<Point> pattern){
         StringBuilder sb = new StringBuilder();
         for (Point p : pattern) {
-            sb.append("("+ p.x + ", "+ p.y + ")");
+            sb.append("("+ p.x + "  "+ p.y + ")");
         }
         return sb.toString();
     }

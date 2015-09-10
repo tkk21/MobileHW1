@@ -114,7 +114,7 @@ public class ALPActivity extends Activity implements SensorEventListener{
         mRotation = mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
         myLinearAcc = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
         mGravity = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
-        mDataRecorder = new DataRecorder(String.format("SensorData%d.txt", DataRecorder.fileCount), DataRecorder.EventDataType.SensorEventData);
+        mDataRecorder = new DataRecorder("SensorData.txt", DataRecorder.EventDataType.SensorEventData);
         sensorEventData = new SensorEventData();
         mPatternView.setSensorEventData(sensorEventData);
     }
@@ -132,7 +132,7 @@ public class ALPActivity extends Activity implements SensorEventListener{
         mSensorManager.registerListener(this, mRotation, SensorManager.SENSOR_DELAY_NORMAL);
         mSensorManager.registerListener(this, myLinearAcc, SensorManager.SENSOR_DELAY_NORMAL);
         mSensorManager.registerListener(this, mGravity, SensorManager.SENSOR_DELAY_NORMAL);
-        mDataRecorder = new DataRecorder(String.format("SensorData%d.csv", DataRecorder.fileCount), DataRecorder.EventDataType.SensorEventData);
+        mDataRecorder = new DataRecorder("SensorData.csv", DataRecorder.EventDataType.SensorEventData);
     }
 
     @Override

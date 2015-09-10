@@ -15,10 +15,18 @@ public class MergedEventData implements EventData {
     private int counter;
     private List<Point> pattern;
 
-    public MergedEventData(List<Point> pattern) {
+    public MergedEventData() {
         sensorEventDataList = new ArrayList<>();
         motionEventDataList = new ArrayList<>();
-        this.counter = 0;
+        counter = 0;
+    }
+
+    public void init(){
+        sensorEventDataList = new ArrayList<>();
+        motionEventDataList = new ArrayList<>();
+    }
+
+    public void setPattern(List<Point> pattern) {
         this.pattern = pattern;
     }
 
