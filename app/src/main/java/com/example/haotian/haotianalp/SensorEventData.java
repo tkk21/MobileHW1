@@ -39,7 +39,9 @@ public class SensorEventData implements EventData{
     public SensorEventData() {
         isRecorded = new boolean[6];
     }
-
+    public void init(){
+        isRecorded = new boolean[6];
+    }
     public void setTimestamp() {
         Date date = new Date(System.currentTimeMillis());
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

@@ -74,9 +74,11 @@ public class LockPatternView extends View
     protected List<Point> mPracticePattern;
     protected Set<Point> mPracticePool;
 
-    protected MotionEventData mMotionEventData;
-    protected DataRecorder mDataRecorder;
+    private MotionEventData mMotionEventData;
+    private DataRecorder mDataRecorder;
 
+    private SensorEventData mSensorEventData;
+    private MergedEventData mMergedEventData;
     public LockPatternView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
@@ -102,6 +104,10 @@ public class LockPatternView extends View
         mEdgePaint.setFlags(Paint.ANTI_ALIAS_FLAG);
 
         testResult = "false";
+    }
+
+    public void setSensorEventData (SensorEventData sensorEventData){
+        this.mSensorEventData = sensorEventData;
     }
 
     // called whenever either the actual drawn length or the nodewise length
@@ -202,9 +208,17 @@ public class LockPatternView extends View
             mode = mPracticeSuccessMode;
             testResult = "true";
             //CALL WRITE DATA HERE
+            DataRecorder mergedDataRecorder = new DataRecorder("MergedData.csv", DataRecorder.EventDataType.MergedEventData);
+            mergedDataRecorder.writeBulkData(mMergedEventData);
+            mergedDataRecorder.close();
+
+
         }
         else{
             testResult = "false";
+            //no need to reset the buffer here as buffer is reset on action_down
+            //mMergedEventData = new MergedEventData();
+
         }
         loadPattern(mPracticePattern, mode);
         // clear the result display after a delay
@@ -289,7 +303,7 @@ public class LockPatternView extends View
 
                 //Modifications starts here
 
-                mDataRecorder = new DataRecorder(String.format("TouchData%d.txt", DataRecorder.fileCount), DataRecorder.EventDataType.MotionEventData);//change txt back to csv
+                mDataRecorder = new DataRecorder(String.format("TouchData%d.csv", DataRecorder.fileCount), DataRecorder.EventDataType.MotionEventData);//change txt back to csv
 
                 if (mVelocityTracker == null) {
                     mVelocityTracker = VelocityTracker.obtain();
@@ -298,11 +312,9 @@ public class LockPatternView extends View
                     mVelocityTracker.clear();
                 }
                 mVelocityTracker.addMovement(event);
-
-                Log.d("external storage", Environment.getExternalStorageDirectory().toString());
                 mMotionEventData = new MotionEventData(event.getX(), event.getY(), mVelocityTracker.getXVelocity(),
                         mVelocityTracker.getYVelocity(),event.getPressure(), event.getSize());
-
+                mMergedEventData = new MergedEventData(mCurrentPattern);
                 //Modifications ends here
 
             case MotionEvent.ACTION_MOVE:
@@ -374,6 +386,8 @@ public class LockPatternView extends View
                 mMotionEventData.setPressure(event.getPressure());
                 mMotionEventData.setSize(event.getSize());
                 mDataRecorder.writeData(mMotionEventData);
+                mMergedEventData.record(mSensorEventData, mMotionEventData);
+
 
                 //Modifications ends here
 

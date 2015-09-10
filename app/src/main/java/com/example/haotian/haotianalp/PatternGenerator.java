@@ -65,6 +65,7 @@ public class PatternGenerator
         for (Point p : pattern) {
             sb.append("("+ p.x + ", "+ p.y + ")");
         }
+        return sb.toString();
     }
 
     /**

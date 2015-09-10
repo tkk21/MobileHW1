@@ -7,6 +7,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 public class DataRecorder {
 
@@ -35,15 +36,24 @@ public class DataRecorder {
         }
     }
 
-    public void writeData(String data){
+    public void writeBulkData (MergedEventData data){
         initialize();
+        List<String> sensorEventDataList = data.getSensorEventDataList();
+        List<String> motionEventDataList = data.getMotionEventDataList();
+
+        for (int i = 0; i<sensorEventDataList.size(); i++){
+            try{
+                bufferedWriter.append(sensorEventDataList.get(i)+","+motionEventDataList.get(i)+","+PatternGenerator.patternToString(data.getPattern())+","+data.getCounter());
+            }
+            catch(IOException e){
+                Log.wtf("data recorder", "failed to write merged data");
+            }
+        }
         try {
-            bufferedWriter.append(data);
-            bufferedWriter.append(System.lineSeparator());
             bufferedWriter.flush();
         }
-        catch (IOException e){
-            Log.wtf("data recorder", "filed to write data");
+        catch(IOException e){
+            Log.wtf("data recorder", "failed to flush the merged data");
         }
     }
 
@@ -76,7 +86,7 @@ public class DataRecorder {
                         bufferedWriter.write(SensorEventData.firstRowString());
                         break;
                     case MergedEventData:
-                        bufferedWriter.write(MotionEventData.firstRowString() + SensorEventData.firstRowString() + ",mCurrentPattern,Counter");
+                        bufferedWriter.write(MergedEventData.firstRowString());
                         break;
                     default:
                         break;
