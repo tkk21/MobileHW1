@@ -53,10 +53,12 @@ public class SensorEventData implements EventData{
 
     public void setAccY(float accY) {
         this.accY = accY;
+        isRecorded[0] = true;
     }
 
     public void setAccZ(float accZ) {
         this.accZ = accZ;
+        isRecorded[0] = true;
     }
 
     public void setMagX(float magX) {
@@ -66,10 +68,12 @@ public class SensorEventData implements EventData{
 
     public void setMagY(float magY) {
         this.magY = magY;
+        isRecorded[1] = true;
     }
 
     public void setMagZ(float magZ) {
         this.magZ = magZ;
+        isRecorded[1] = true;
     }
 
     public void setGyrX(float gyrX) {
@@ -79,10 +83,12 @@ public class SensorEventData implements EventData{
 
     public void setGyrY(float gyrY) {
         this.gyrY = gyrY;
+        isRecorded[2] = true;
     }
 
     public void setGyrZ(float gyrZ) {
         this.gyrZ = gyrZ;
+        isRecorded[2] = true;
     }
 
     public void setRotX(float rotX) {
@@ -92,10 +98,12 @@ public class SensorEventData implements EventData{
 
     public void setRotY(float rotY) {
         this.rotY = rotY;
+        isRecorded[3] = true;
     }
 
     public void setRotZ(float rotZ) {
         this.rotZ = rotZ;
+        isRecorded[3] = true;
     }
 
     public void setLinAccX(float linAccX) {
@@ -105,10 +113,12 @@ public class SensorEventData implements EventData{
 
     public void setLinAccY(float linAccY) {
         this.linAccY = linAccY;
+        isRecorded[4] = true;
     }
 
     public void setLinAccZ(float linAccZ) {
         this.linAccZ = linAccZ;
+        isRecorded[4] = true;
     }
 
     public void setGravX(float gravX) {
@@ -118,10 +128,12 @@ public class SensorEventData implements EventData{
 
     public void setGravY(float gravY) {
         this.gravY = gravY;
+        isRecorded[5] = true;
     }
 
     public void setGravZ(float gravZ) {
         this.gravZ = gravZ;
+        isRecorded[5] = true;
     }
 
     public boolean isComplete() {
