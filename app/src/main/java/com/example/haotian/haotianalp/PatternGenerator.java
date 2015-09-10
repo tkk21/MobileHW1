@@ -60,6 +60,13 @@ public class PatternGenerator
         return pattern;
     }
 
+    public static String patternToString(List<Point> pattern){
+        StringBuilder sb = new StringBuilder();
+        for (Point p : pattern) {
+            sb.append("("+ p.x + ", "+ p.y + ")");
+        }
+    }
+
     /**
      * generates the candidate list for the next iteration,
      * removing the nodes that are already picked
