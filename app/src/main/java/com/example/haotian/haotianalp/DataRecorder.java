@@ -87,12 +87,16 @@ public class DataRecorder {
                         bufferedWriter.write(SensorEventData.firstRowString());
                         break;
                     case MergedEventData:
-                        bufferedWriter.write(MergedEventData.firstRowString());
+                        if (!file.exists()) {
+                            bufferedWriter.write(MergedEventData.firstRowString());
+                        }
                         break;
                     default:
                         break;
                 }
-                bufferedWriter.append(System.lineSeparator());
+                if (!isMergedEventData || (isMergedEventData && !file.exists())) {
+                    bufferedWriter.append(System.lineSeparator());
+                }
                 bufferedWriter.flush();
                 Log.d("file is at: ", file.getAbsolutePath());
             } catch (IOException ex) {
