@@ -74,7 +74,8 @@ public class DataRecorder {
                 boolean isMergedEventData = eventDataType.equals(EventDataType.MergedEventData);
                 csvDir.mkdir();
                 File file = new File(csvDir, filename);
-                if (file.exists() && !isMergedEventData){
+                boolean fileExists = file.exists();
+                if (fileExists && !isMergedEventData){
                     file.delete();
                 }
                 bufferedWriter = new BufferedWriter(new FileWriter (file, true));
@@ -87,7 +88,7 @@ public class DataRecorder {
                         bufferedWriter.write(SensorEventData.firstRowString());
                         break;
                     case MergedEventData:
-                        if (!file.exists()) {
+                        if (fileExists) {
                             bufferedWriter.write(MergedEventData.firstRowString());
                         }
                         break;
