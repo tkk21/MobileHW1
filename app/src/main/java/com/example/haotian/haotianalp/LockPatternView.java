@@ -106,6 +106,7 @@ public class LockPatternView extends View
         testResult = "false";
 
         mMergedEventData = new MergedEventData();
+        mMergedEventData.ioinit();
     }
 
     public void setSensorEventData (SensorEventData sensorEventData){

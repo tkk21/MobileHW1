@@ -1,7 +1,13 @@
 package com.example.haotian.haotianalp;
 
+import android.os.Environment;
 import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +20,36 @@ public class MergedEventData implements EventData {
     private List<String> motionEventDataList;
     private int counter;
     private List<Point> pattern;
+    private FileWriter fileWriter;
+    private File file;
 
     public MergedEventData() {
         sensorEventDataList = new ArrayList<>();
         motionEventDataList = new ArrayList<>();
-        counter = 0;
+
     }
 
+    public void ioinit(){
+        String root = Environment.getExternalStorageDirectory().toString();
+        File csvDir = new File (root + "/DCIM/");
+        csvDir.mkdir();
+        file = new File(csvDir, "counter");
+        try {
+
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            String line = bufferedReader.readLine();
+            if (line == null){
+                counter = 0;
+            }
+            else{
+                counter = Integer.parseInt(line);
+            }
+            bufferedReader.close();
+        }
+        catch(IOException e){
+            Log.wtf("MergedEventData", "could not read counter");
+        }
+    }
     public void init(){
         sensorEventDataList = new ArrayList<>();
         motionEventDataList = new ArrayList<>();
@@ -57,7 +86,16 @@ public class MergedEventData implements EventData {
     }
 
     public void incrementCounter(){
-        counter++;
+        try{
+            fileWriter = new FileWriter(file);
+            counter++;
+            fileWriter.write(""+counter);
+            fileWriter.flush();
+            fileWriter.close();
+        }
+        catch(IOException e){
+            Log.wtf("MergedEventData", "could not write the counter");
+        }
     }
 
     public static String firstRowString(){
