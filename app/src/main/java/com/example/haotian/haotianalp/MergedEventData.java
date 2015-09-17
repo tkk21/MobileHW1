@@ -61,6 +61,6 @@ public class MergedEventData implements EventData {
     }
 
     public static String firstRowString(){
-        return MotionEventData.firstRowString() +","+ SensorEventData.firstRowString() + ",mCurrentPattern,Counter";
+        return SensorEventData.firstRowString() + ","+ MotionEventData.firstRowString() + ",mCurrentPattern,Counter";
     }
 }
