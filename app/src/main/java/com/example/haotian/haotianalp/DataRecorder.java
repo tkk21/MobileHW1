@@ -41,9 +41,10 @@ public class DataRecorder {
 
         for (int i = 0; i<sensorEventDataList.size(); i++){
             try{
-                bufferedWriter.append(motionEventDataList.get(i)+","+sensorEventDataList.get(i)+","
+                bufferedWriter.append(sensorEventDataList.get(i)+","+motionEventDataList.get(i)+","
                         +PatternGenerator.patternToString(data.getPattern())+","+data.getCounter());
                 bufferedWriter.append(System.lineSeparator());
+                Log.d("writeBulkData", ""+data.getCounter());
             }
             catch(IOException e){
                 Log.wtf("data recorder", "failed to write merged data");
