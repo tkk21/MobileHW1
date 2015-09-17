@@ -42,7 +42,82 @@ public class PatternGenerator
 
     public List<Point> getPattern()
     {
+	    return generatePattern1();
+//        return generateRandomPattern();
+    }
+
+    /**
+     * generating pattern1 for mobile weka experiments
+     * 010
+     * 101
+     * 010
+     * @return
+     */
+    private List<Point> generatePattern1(){
         List<Point> pattern = new ArrayList<Point>();
+        pattern.add(new Point(0,1));
+        pattern.add(new Point(1,2));
+        pattern.add(new Point(2,1));
+        pattern.add(new Point(1,0));
+
+        return pattern;
+    }
+
+    /**
+     * generating pattern2 for mobile weka experiments
+     * 111
+     * 010
+     * 100
+     * @return
+     */
+    private List<Point> generatePattern2(){
+        List<Point> pattern = new ArrayList<Point>();
+
+        pattern.add(new Point(0,0));
+        pattern.add(new Point(1,0));
+        pattern.add(new Point(2,0));
+        pattern.add(new Point(1,1));
+        pattern.add(new Point(0,2));
+        return pattern;
+    }
+
+    /**
+     * generating pattern3 for mobile weka experiments
+     * 111
+     * 111
+     * 000
+     * @return
+     */
+    private List<Point> generatePattern3(){
+        List<Point> pattern = new ArrayList<Point>();
+
+        pattern.add(new Point(0,1));
+        pattern.add(new Point(1,1));
+        pattern.add(new Point(2,1));
+        pattern.add(new Point(2,0));
+        pattern.add(new Point(1,0));
+        pattern.add(new Point(0,0));
+        return pattern;
+    }
+
+    /**
+     * generating pattern4 for mobile weka experiments
+     * 010
+     * 110
+     * 100
+     * @return
+     */
+    private List<Point> generatePattern4(){
+        List<Point> pattern = new ArrayList<Point>();
+
+        pattern.add(new Point(1,0));
+        pattern.add(new Point(1,1));
+        pattern.add(new Point(0,2));
+        pattern.add(new Point(0,1));
+        return pattern;
+    }
+	private List<Point> generateRandomPattern(){
+		List<Point> pattern = new ArrayList<Point>();
 
         Point initPoint = generatePoint();
         pattern.add(initPoint);
@@ -58,7 +133,7 @@ public class PatternGenerator
             Log.d("debug", "the point is: " + p.x + ", "+ p.y);
         }
         return pattern;
-    }
+	}
 
     public static String patternToString(List<Point> pattern){
         StringBuilder sb = new StringBuilder();
