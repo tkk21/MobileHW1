@@ -1,44 +1,69 @@
 package com.example.haotian.haotianalp;
 
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.os.Environment;
 import android.util.Log;
 
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 public class DataRecorder {
 
     enum EventDataType{
-        MotionEventData, SensorEventData;
+        MotionEventData, SensorEventData, MergedEventData;
     }
-    public static int fileCount = 0;
     private final String filename;
-    private FileOutputStream outputStream;
+    private BufferedWriter bufferedWriter;
     private EventDataType eventDataType;
     public DataRecorder(String filename, EventDataType eventDataType){
         this.filename = filename;
-        fileCount++;
         this.eventDataType = eventDataType;
     }
 
     public void writeData(EventData touch){
         initialize();
         try {
-            outputStream.write(touch.toString().getBytes());
-            outputStream.write(System.lineSeparator().getBytes());
-            outputStream.flush();
+            bufferedWriter.append(touch.toString());
+            bufferedWriter.append(System.lineSeparator());
+            bufferedWriter.flush();
         }
         catch (IOException e){
-            Log.wtf("touch data recorder", "filed to write data");
+            Log.wtf("data recorder", "filed to write data");
+        }
+    }
+
+    public void writeBulkData (MergedEventData data){
+        initialize();
+        List<String> sensorEventDataList = data.getSensorEventDataList();
+        List<String> motionEventDataList = data.getMotionEventDataList();
+        int counter = 0;
+        for (int i = 0; i<sensorEventDataList.size(); i++){
+            try{
+                bufferedWriter.append(sensorEventDataList.get(i)+","+motionEventDataList.get(i)+","
+                        +PatternGenerator.patternToString(data.getPattern())+","+data.getCounter());
+                bufferedWriter.append(System.lineSeparator());
+                if (counter != data.getCounter()) {
+                    Log.d("writeBulkData", "" + data.getCounter());
+                    counter = data.getCounter();
+                }
+            }
+            catch(IOException e){
+                Log.wtf("data recorder", "failed to write merged data");
+            }
+        }
+        try {
+            bufferedWriter.flush();
+        }
+        catch(IOException e){
+            Log.wtf("data recorder", "failed to flush the merged data");
         }
     }
 
     public void close() {
         try {
-            outputStream.close();
+            bufferedWriter.close();
         }
         catch (IOException e){
             Log.wtf("touch data recorder", "could not close the file");
@@ -46,29 +71,38 @@ public class DataRecorder {
     }
 
     private void initialize () {
-        if (outputStream == null) {
+        if (bufferedWriter == null) {
             try {
                 String root = Environment.getExternalStorageDirectory().toString();
                 File csvDir = new File (root + "/DCIM/");
+                boolean isMergedEventData = eventDataType.equals(EventDataType.MergedEventData);
                 csvDir.mkdir();
                 File file = new File(csvDir, filename);
-                if (file.exists()){
+                boolean fileExists = file.exists();
+                if (fileExists && !isMergedEventData){
                     file.delete();
                 }
-                outputStream = new FileOutputStream(file);
+                bufferedWriter = new BufferedWriter(new FileWriter (file, true));
 
                 switch(eventDataType){
                     case MotionEventData:
-                        outputStream.write(MotionEventData.firstRowString().getBytes());
+                        bufferedWriter.write(MotionEventData.firstRowString());
                         break;
                     case SensorEventData:
-                        outputStream.write(SensorEventData.firstRowString().getBytes());
+                        bufferedWriter.write(SensorEventData.firstRowString());
+                        break;
+                    case MergedEventData:
+                        if (!fileExists) {
+                            bufferedWriter.write(MergedEventData.firstRowString());
+                        }
                         break;
                     default:
                         break;
                 }
-                outputStream.write(System.lineSeparator().getBytes());
-                outputStream.flush();
+                if (!isMergedEventData || (isMergedEventData && !fileExists)) {
+                    bufferedWriter.append(System.lineSeparator());
+                }
+                bufferedWriter.flush();
                 Log.d("file is at: ", file.getAbsolutePath());
             } catch (IOException ex) {
                 Log.wtf("touch data recorder", "failed to create a new file writer");
